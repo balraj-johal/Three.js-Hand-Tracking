@@ -1,13 +1,10 @@
 import { Hands, Results } from "@mediapipe/hands";
 import { Camera } from "@mediapipe/camera_utils";
-import { useEffect, useState } from "react";
-import SceneWrapper, { Vec3 } from "./Scene";
+import { useEffect } from "react";
 
 const landmarkIndex = 9; // track base of middle finger
 
 export default function HandsComponent() {
-  const [handOnePos, setHandOnePos] = useState<Vec3>({ x: 0, y: 0, z: 0 }!);
-
   useEffect(() => {
     function onResults(results: Results) {
       const hand = results.multiHandLandmarks[0];
@@ -15,15 +12,17 @@ export default function HandsComponent() {
       if (hand) manipulatedPosition = hand[landmarkIndex];
       if (manipulatedPosition) {
         manipulatedPosition.x = 1.0 - manipulatedPosition.x;
-        manipulatedPosition.y = 1.0 - manipulatedPosition.y;
         manipulatedPosition.z = manipulatedPosition.z * -5;
       }
-      if (manipulatedPosition) setHandOnePos(manipulatedPosition as Vec3);
+      console.log(manipulatedPosition);
     }
 
     const videoElement = document.getElementsByClassName(
       "input_video"
     )[0] as HTMLVideoElement;
+    const canvasElement = document.getElementsByClassName(
+      "camera_canvas"
+    )[0] as HTMLCanvasElement;
 
     const constraints = {
       audio: false,
@@ -55,6 +54,8 @@ export default function HandsComponent() {
       camera.start();
       videoElement.srcObject = stream;
       console.log(stream);
+      canvasElement.width = 640;
+      canvasElement.height = 480;
       console.log("test");
 
       // setInterval(() => {
@@ -89,7 +90,7 @@ export default function HandsComponent() {
   return (
     <div>
       <video autoPlay playsInline className="input_video"></video>
-      <SceneWrapper handOnePos={handOnePos} />
+      <canvas className="camera_canvas"></canvas>
     </div>
   );
 }
