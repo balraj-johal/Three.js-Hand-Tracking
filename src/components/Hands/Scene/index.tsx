@@ -8,22 +8,22 @@ export type Vec3 = {
 };
 
 interface Props {
-  handOnePos: Vec3;
+  leftHandPos: Vec3;
+  rightHandPos: Vec3;
 }
 
 const inputScaler = 5;
 
-export default function SceneWrapper({ handOnePos }: Props) {
-  console.log("handOnePos", handOnePos);
+export default function SceneWrapper({ leftHandPos }: Props) {
   return (
     <Canvas>
       <ambientLight />
       <pointLight position={[10, 10, 10]} />
       <Box
         position={[
-          inputScaler * handOnePos.x,
-          inputScaler * handOnePos.y,
-          handOnePos.z,
+          inputScaler * leftHandPos.x,
+          inputScaler * leftHandPos.y,
+          leftHandPos.z,
         ]}
       />
     </Canvas>

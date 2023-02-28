@@ -6,19 +6,27 @@ import SceneWrapper, { Vec3 } from "./Scene";
 const landmarkIndex = 9; // track base of middle finger
 
 export default function HandsComponent() {
-  const [handOnePos, setHandOnePos] = useState<Vec3>({ x: 0, y: 0, z: 0 }!);
+  const [leftHandPos, setLeftHandPos] = useState<Vec3>({ x: 0, y: 0, z: 0 }!);
+  const [rightHandPos, setRightHandPos] = useState<Vec3>({ x: 0, y: 0, z: 0 }!);
 
   useEffect(() => {
     function onResults(results: Results) {
-      const hand = results.multiHandLandmarks[0];
-      let manipulatedPosition;
-      if (hand) manipulatedPosition = hand[landmarkIndex];
-      if (manipulatedPosition) {
-        manipulatedPosition.x = 1.0 - manipulatedPosition.x;
-        manipulatedPosition.y = 1.0 - manipulatedPosition.y;
-        manipulatedPosition.z = manipulatedPosition.z * -5;
-      }
-      if (manipulatedPosition) setHandOnePos(manipulatedPosition as Vec3);
+      results.multiHandedness.forEach((handFlag) => {
+        const hand = results.multiHandLandmarks[handFlag.index];
+        let manipulatedPosition;
+        if (hand) manipulatedPosition = hand[landmarkIndex];
+        if (manipulatedPosition) {
+          manipulatedPosition.x = 1.0 - manipulatedPosition.x;
+          manipulatedPosition.y = 1.0 - manipulatedPosition.y;
+          manipulatedPosition.z = manipulatedPosition.z * -5;
+        }
+        if (manipulatedPosition) {
+          if (handFlag.label === "Left")
+            setLeftHandPos(manipulatedPosition as Vec3);
+          if (handFlag.label === "Right")
+            setRightHandPos(manipulatedPosition as Vec3);
+        }
+      });
     }
 
     const videoElement = document.getElementsByClassName(
@@ -89,7 +97,7 @@ export default function HandsComponent() {
   return (
     <div>
       <video autoPlay playsInline className="input_video"></video>
-      <SceneWrapper handOnePos={handOnePos} />
+      <SceneWrapper leftHandPos={leftHandPos} rightHandPos={rightHandPos} />
     </div>
   );
 }
