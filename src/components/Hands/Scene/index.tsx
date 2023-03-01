@@ -41,10 +41,19 @@ function Interaction({ leftHandPos, rightHandPos }: Props) {
         position={[
           viewport.width * (leftHandPos.x - 0.5),
           viewport.height * (leftHandPos.y - 0.5),
-          leftHandPos.z,
+          0.0,
         ]}
       >
-        <meshNormalMaterial />
+        <meshPhysicalMaterial color="hotpink" />
+      </Box>
+      <Box
+        position={[
+          viewport.width * (rightHandPos.x - 0.5),
+          viewport.height * (rightHandPos.y - 0.5),
+          0.0,
+        ]}
+      >
+        <meshPhysicalMaterial color="orange" />
       </Box>
     </>
   );

@@ -18,7 +18,7 @@ export default function HandsComponent() {
         if (manipulatedPosition) {
           manipulatedPosition.x = manipulatedPosition.x;
           manipulatedPosition.y = 1.0 - manipulatedPosition.y;
-          manipulatedPosition.z = manipulatedPosition.z * -5;
+          manipulatedPosition.z = -manipulatedPosition.z;
         }
         if (manipulatedPosition) {
           if (handFlag.label === "Left")
