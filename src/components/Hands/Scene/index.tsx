@@ -1,6 +1,11 @@
 import { Box, Sphere } from "@react-three/drei";
-import { Canvas, useThree } from "@react-three/fiber";
+import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { Debug, Physics, RigidBody } from "@react-three/rapier";
+import { useRef } from "react";
+
+const lerp = (a: number, b: number, t: number) => {
+  return a + (b - a) * t;
+};
 
 export type Vec3 = {
   x: number;
@@ -9,11 +14,14 @@ export type Vec3 = {
 };
 
 interface Props {
-  leftHandPos: Vec3;
-  rightHandPos: Vec3;
+  leftTarget: Vec3;
+  rightTarget: Vec3;
 }
 
-export default function SceneWrapper({ leftHandPos, rightHandPos }: Props) {
+export default function SceneWrapper({
+  leftTarget: leftHandPos,
+  rightTarget: rightHandPos,
+}: Props) {
   return (
     <div
       style={{
@@ -30,22 +38,58 @@ export default function SceneWrapper({ leftHandPos, rightHandPos }: Props) {
           <Debug />
           <ambientLight />
           <pointLight position={[10, 10, 10]} />
-          <Interaction leftHandPos={leftHandPos} rightHandPos={rightHandPos} />
+          <Interaction leftTarget={leftHandPos} rightTarget={rightHandPos} />
         </Physics>
       </Canvas>
     </div>
   );
 }
 
-function Interaction({ leftHandPos, rightHandPos }: Props) {
+const LERP_SPEED = 0.1;
+
+function Interaction({ leftTarget, rightTarget }: Props) {
   const { viewport } = useThree();
+  const leftHandPos = useRef({
+    x: 0.0,
+    y: 1.0,
+    z: 0.0,
+  });
+  const rightHandPos = useRef({
+    x: 0.0,
+    y: 1.0,
+    z: 0.0,
+  });
+
+  useFrame(() => {
+    leftHandPos.current.x = lerp(
+      leftHandPos.current.x,
+      leftTarget.x,
+      LERP_SPEED
+    );
+    leftHandPos.current.y = lerp(
+      leftHandPos.current.y,
+      leftTarget.y,
+      LERP_SPEED
+    );
+    rightHandPos.current.x = lerp(
+      rightHandPos.current.x,
+      rightTarget.x,
+      LERP_SPEED
+    );
+    rightHandPos.current.y = lerp(
+      rightHandPos.current.y,
+      rightTarget.y,
+      LERP_SPEED
+    );
+  });
+
   return (
     <>
       <RigidBody
         type="kinematicPosition"
         position={[
-          viewport.width * (leftHandPos.x - 0.5),
-          viewport.height * (leftHandPos.y - 0.5),
+          viewport.width * (leftHandPos.current.x - 0.5),
+          viewport.height * (leftHandPos.current.y - 0.5),
           0.0,
         ]}
       >
@@ -56,8 +100,8 @@ function Interaction({ leftHandPos, rightHandPos }: Props) {
       <RigidBody
         type="kinematicPosition"
         position={[
-          viewport.width * (rightHandPos.x - 0.5),
-          viewport.height * (rightHandPos.y - 0.5),
+          viewport.width * (rightHandPos.current.x - 0.5),
+          viewport.height * (rightHandPos.current.y - 0.5),
           0.0,
         ]}
       >

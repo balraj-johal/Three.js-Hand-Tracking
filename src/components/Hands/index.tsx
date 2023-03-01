@@ -88,7 +88,7 @@ export default function HandsComponent() {
         className="input_video"
         style={{ width: "100%" }}
       ></video>
-      <SceneWrapper leftHandPos={leftHandPos} rightHandPos={rightHandPos} />
+      <SceneWrapper leftTarget={leftHandPos} rightTarget={rightHandPos} />
     </div>
   );
 }
