@@ -66,7 +66,7 @@ function Interaction({ leftHandPos, rightHandPos }: Props) {
         </Sphere>
       </RigidBody>
 
-      <RigidBody>
+      <RigidBody enabledTranslations={[true, true, false]}>
         <Box position={[0, 1, 0.0]}>
           <meshPhysicalMaterial color="red" />
         </Box>
@@ -74,8 +74,8 @@ function Interaction({ leftHandPos, rightHandPos }: Props) {
 
       <RigidBody type="fixed">
         <Box
-          position={[0, -viewport.height / 3, 0.0]}
-          scale={[viewport.width * 2, 0.5, 5.0]}
+          position={[0, -viewport.height / 4, 0.0]}
+          scale={[viewport.width * 2, 0.5, 1.0]}
         >
           <meshPhysicalMaterial color="green" />
         </Box>
