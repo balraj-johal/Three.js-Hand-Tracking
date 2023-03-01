@@ -16,7 +16,7 @@ export default function HandsComponent() {
         let manipulatedPosition;
         if (hand) manipulatedPosition = hand[landmarkIndex];
         if (manipulatedPosition) {
-          manipulatedPosition.x = 1.0 - manipulatedPosition.x;
+          manipulatedPosition.x = manipulatedPosition.x;
           manipulatedPosition.y = 1.0 - manipulatedPosition.y;
           manipulatedPosition.z = manipulatedPosition.z * -5;
         }
@@ -32,10 +32,12 @@ export default function HandsComponent() {
     const videoElement = document.getElementsByClassName(
       "input_video"
     )[0] as HTMLVideoElement;
+    videoElement.style.transform = "scaleX(-1)";
 
     const constraints = {
       audio: false,
       video: true,
+      facingMode: { exact: "environment" },
     };
 
     function handleSuccess(stream: any) {
