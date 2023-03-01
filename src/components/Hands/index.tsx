@@ -6,8 +6,8 @@ import SceneWrapper, { Vec3 } from "./Scene";
 const landmarkIndex = 9; // track base of middle finger
 
 export default function HandsComponent() {
-  const [leftHandPos, setLeftHandPos] = useState<Vec3>({ x: 0, y: 0, z: 0 }!);
-  const [rightHandPos, setRightHandPos] = useState<Vec3>({ x: 0, y: 0, z: 0 }!);
+  const [leftHandPos, setLeftHandPos] = useState<Vec3>({ x: 0, y: 1, z: 0 }!);
+  const [rightHandPos, setRightHandPos] = useState<Vec3>({ x: 0, y: 1, z: 0 }!);
 
   useEffect(() => {
     function onResults(results: Results) {
