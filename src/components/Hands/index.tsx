@@ -64,22 +64,6 @@ export default function HandsComponent() {
       });
       camera.start();
       videoElement.srcObject = stream;
-      console.log(stream);
-      console.log("test");
-
-      // setInterval(() => {
-      //   if (canvasElement) {
-      //     canvasElement
-      //       .getContext("2d")
-      //       ?.drawImage(
-      //         videoElement,
-      //         0,
-      //         0,
-      //         canvasElement.width,
-      //         canvasElement.height
-      //       );
-      //   }
-      // }, 1000 / 60);
     }
 
     function handleError(error: any) {

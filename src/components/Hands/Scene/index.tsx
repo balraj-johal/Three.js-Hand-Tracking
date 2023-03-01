@@ -43,7 +43,9 @@ function Interaction({ leftHandPos, rightHandPos }: Props) {
           viewport.height * (leftHandPos.y - 0.5),
           leftHandPos.z,
         ]}
-      />
+      >
+        <meshNormalMaterial />
+      </Box>
     </>
   );
 }
