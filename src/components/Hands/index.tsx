@@ -97,8 +97,13 @@ export default function HandsComponent() {
   }, []);
 
   return (
-    <div>
-      <video autoPlay playsInline className="input_video"></video>
+    <div style={{ width: "100%", height: "100%", position: "relative" }}>
+      <video
+        autoPlay
+        playsInline
+        className="input_video"
+        style={{ width: "100%" }}
+      ></video>
       <SceneWrapper leftHandPos={leftHandPos} rightHandPos={rightHandPos} />
     </div>
   );

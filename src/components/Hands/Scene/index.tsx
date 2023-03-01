@@ -14,7 +14,16 @@ interface Props {
 
 export default function SceneWrapper({ leftHandPos, rightHandPos }: Props) {
   return (
-    <div style={{ border: "1px solid red" }}>
+    <div
+      style={{
+        border: "1px solid red",
+        position: "absolute",
+        top: 0,
+        left: 0,
+        height: "100%",
+        width: "100%",
+      }}
+    >
       <Canvas>
         <ambientLight />
         <pointLight position={[10, 10, 10]} />
