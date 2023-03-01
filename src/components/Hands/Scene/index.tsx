@@ -1,5 +1,5 @@
 import { Box } from "@react-three/drei";
-import { Canvas } from "@react-three/fiber";
+import { Canvas, useThree } from "@react-three/fiber";
 
 export type Vec3 = {
   x: number;
@@ -12,20 +12,29 @@ interface Props {
   rightHandPos: Vec3;
 }
 
-const inputScaler = 5;
-
-export default function SceneWrapper({ leftHandPos }: Props) {
+export default function SceneWrapper({ leftHandPos, rightHandPos }: Props) {
   return (
-    <Canvas>
-      <ambientLight />
-      <pointLight position={[10, 10, 10]} />
+    <div style={{ border: "1px solid red" }}>
+      <Canvas>
+        <ambientLight />
+        <pointLight position={[10, 10, 10]} />
+        <Interaction leftHandPos={leftHandPos} rightHandPos={rightHandPos} />
+      </Canvas>
+    </div>
+  );
+}
+
+function Interaction({ leftHandPos, rightHandPos }: Props) {
+  const { viewport } = useThree();
+  return (
+    <>
       <Box
         position={[
-          inputScaler * leftHandPos.x,
-          inputScaler * leftHandPos.y,
+          viewport.width * (leftHandPos.x - 0.5),
+          viewport.height * (leftHandPos.y - 0.5),
           leftHandPos.z,
         ]}
       />
-    </Canvas>
+    </>
   );
 }
