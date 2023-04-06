@@ -16,7 +16,6 @@ export default function HandsComponent() {
         let manipulatedPosition;
         if (hand) manipulatedPosition = hand[landmarkIndex];
         if (manipulatedPosition) {
-          manipulatedPosition.x = manipulatedPosition.x;
           manipulatedPosition.y = 1.0 - manipulatedPosition.y;
           manipulatedPosition.z = -manipulatedPosition.z;
         }
